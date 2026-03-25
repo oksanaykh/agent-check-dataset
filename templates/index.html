@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dataset Validator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/css/main.css" />
+</head>
+<body>
+
+<!-- Upload Screen -->
+<div id="upload-screen" class="screen active">
+  <div class="upload-bg"><div class="grid-lines"></div></div>
+  <header class="site-header">
+    <span class="logo-mark">⬡</span>
+    <span class="logo-text">DataValidator</span>
+  </header>
+  <main class="upload-main">
+    <div class="upload-hero">
+      <h1 class="hero-title">
+        <span class="hero-line">Dataset</span>
+        <span class="hero-line accent">Health Check</span>
+      </h1>
+      <p class="hero-sub">Upload a CSV — get a full diagnostic report with one-click fixes before analysis.</p>
+    </div>
+    <div class="drop-zone" id="drop-zone">
+      <input type="file" id="file-input" accept=".csv" hidden />
+      <div class="drop-inner">
+        <div class="drop-icon">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+            <rect x="4" y="8" width="40" height="32" rx="4" stroke="currentColor" stroke-width="2" fill="none"/>
+            <path d="M24 20v12M20 28l4-4 4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="10" y="14" width="8" height="2" rx="1" fill="currentColor" opacity=".4"/>
+            <rect x="10" y="18" width="14" height="2" rx="1" fill="currentColor" opacity=".25"/>
+          </svg>
+        </div>
+        <p class="drop-label">Drop your CSV file here</p>
+        <p class="drop-sub">or <button class="link-btn" id="browse-btn">browse to upload</button></p>
+        <p class="drop-limit">Up to 200 MB · CSV only</p>
+      </div>
+    </div>
+    <div class="upload-checks">
+      <div class="check-pill">✓ Structure</div>
+      <div class="check-pill">✓ Types</div>
+      <div class="check-pill">✓ Nulls</div>
+      <div class="check-pill">✓ Duplicates</div>
+      <div class="check-pill">✓ Numerics</div>
+      <div class="check-pill">✓ Categories</div>
+      <div class="check-pill">✓ Dates</div>
+      <div class="check-pill">✓ Keys</div>
+      <div class="check-pill">✓ Business Logic</div>
+    </div>
+  </main>
+</div>
+
+<!-- Loading Screen -->
+<div id="loading-screen" class="screen">
+  <div class="loader-wrap">
+    <div class="loader-ring"></div>
+    <p class="loader-text" id="loader-text">Preparing…</p>
+
+    <!-- Upload progress bar (shown during file transfer) -->
+    <div id="progress-wrap" class="progress-wrap hidden">
+      <div class="progress-track">
+        <div class="progress-bar" id="progress-bar"></div>
+      </div>
+    </div>
+
+    <div class="loader-steps" id="loader-steps"></div>
+  </div>
+</div>
+
+<!-- Report Screen -->
+<div id="report-screen" class="screen">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-top">
+      <button class="back-btn" id="back-btn">← New file</button>
+      <div class="file-name" id="file-name-display"></div>
+      <div class="file-meta" id="file-meta"></div>
+    </div>
+    <div class="summary-grid" id="summary-grid"></div>
+    <nav class="section-nav" id="section-nav"></nav>
+    <div class="sidebar-actions">
+      <button class="btn-download" id="download-btn">↓ Download cleaned CSV</button>
+      <button class="btn-preview"  id="preview-btn">⊞ Preview data</button>
+    </div>
+  </aside>
+
+  <main class="report-main" id="report-main">
+    <div class="report-header">
+      <h2 class="report-title">Validation Report</h2>
+      <div class="filter-bar">
+        <button class="filter-btn active" data-filter="ALL">All</button>
+        <button class="filter-btn" data-filter="CRITICAL">Critical</button>
+        <button class="filter-btn" data-filter="WARNING">Warning</button>
+        <button class="filter-btn" data-filter="INFO">Info</button>
+        <button class="filter-btn" data-filter="OK">Passed</button>
+      </div>
+    </div>
+    <div class="issues-list" id="issues-list"></div>
+  </main>
+</div>
+
+<!-- Preview Modal -->
+<div id="preview-modal" class="modal-backdrop hidden">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">Data Preview</span>
+      <button class="modal-close" id="modal-close">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="table-wrap" id="preview-table-wrap">
+        <p class="loading-msg">Loading…</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast" class="toast hidden"></div>
+
+<script src="/static/js/app.js"></script>
+</body>
+</html>
